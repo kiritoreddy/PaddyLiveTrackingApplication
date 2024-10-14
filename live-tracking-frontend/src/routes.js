@@ -1,37 +1,31 @@
-// Centralized route configuration
+// routes.js
 import React, { useEffect } from 'react';
-import { Route, Switch, Redirect } from 'react-router-dom';
-import { Dashboard as AdminDashboard, ManageUsers, Reports as AdminReports } from './pages/Admin';
-import { Dashboard as PPCDashboard, Form, Reports as PPCReports } from './pages/PPC';
-import { Login, NotFound } from './pages/Common';
-import PrivateRoute from './components/PrivateRoute'; // Your custom private route component
-import { AuthService } from './services/AuthService';
+import { Routes, Route, Navigate } from 'react-router-dom';
+import AdminDashboard from './pages/Admin/Dashboard';
+import ManageUsers from './pages/Admin/ManageUsers';
+import AdminReports from './pages/Admin/Reports';
+import PPCDashboard from './pages/PPC/Dashboard';
+import Form from './pages/PPC/Form';
+import Login from './pages/Common/Login';
+import NotFound from './pages/Common/NotFound';
+import PrivateRoute from './PrivateRoute';
 
-const Routes = () => {
-    const [isAuthenticated, setIsAuthenticated] = React.useState(false);
-
-    useEffect(() => {
-        const checkAuth = async () => {
-            const auth = await AuthService.isAuthenticated();
-            setIsAuthenticated(auth);
-        };
-        checkAuth();
-    }, []);
-
+const AppRoutes = () => {
     return (
-        <Switch>
-            <Route path="/login" component={Login} />
-            <PrivateRoute path="/admin/dashboard" component={AdminDashboard} />
-            <PrivateRoute path="/admin/manage-users" component={ManageUsers} />
-            <PrivateRoute path="/admin/reports" component={AdminReports} />
-            <PrivateRoute path="/ppc/dashboard" component={PPCDashboard} />
-            <PrivateRoute path="/ppc/form" component={Form} />
-            <PrivateRoute path="/ppc/reports" component={PPCReports} />
-            <Route path="/404" component={NotFound} />
-            <Redirect from="/" to="/login" />
-            <Redirect to="/404" />
-        </Switch>
+        <Routes>
+            <Route path="/login" element={<Login />} />
+            <Route element={<PrivateRoute />}>
+                <Route path="/admin/dashboard" element={<AdminDashboard />} />
+                <Route path="/admin/manage-users" element={<ManageUsers />} />
+                <Route path="/admin/reports" element={<AdminReports />} />
+                <Route path="/ppc/dashboard" element={<PPCDashboard />} />
+                <Route path="/ppc/form" element={<Form />} />
+            </Route>
+            <Route path="/404" element={<NotFound />} />
+            <Route path="/" element={<Navigate to="/login" />} />
+            <Route path="*" element={<Navigate to="/404" />} />
+        </Routes>
     );
 };
 
-export default Routes;
+export default AppRoutes;

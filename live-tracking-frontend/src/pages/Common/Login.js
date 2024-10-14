@@ -1,7 +1,6 @@
 import React, { useState,useContext } from 'react';
 import { AuthService } from '../../services/AuthService';
-import Button from '../../components/Button';
-import { AuthContext } from '../context/AuthContext';
+import { AuthContext } from '../../context/AuthContext';
 
 const Login = () => {
     const [username, setUsername] = useState('');
@@ -9,7 +8,7 @@ const Login = () => {
     const { setUser } = useContext(AuthContext);
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const userData = await AuthService.login(credentials);
+        const userData = await AuthService.login({username,password});
         if (userData) {
             setUser(userData); // Set user data in context after successful login
         } else {
