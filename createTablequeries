@@ -1,0 +1,83 @@
+-- Create a new database
+CREATE DATABASE paddy_procurement_db;
+
+-- Switch to the newly created database
+USE paddy_procurement_db;
+
+-- create society table
+CREATE TABLE society (
+    societyId INT AUTO_INCREMENT PRIMARY KEY,
+    society_name VARCHAR(100) NOT NULL,
+    incharge VARCHAR(100) NOT NULL,
+    phone_number VARCHAR(15),
+    email VARCHAR(100)
+);
+
+-- Creating PPC Table
+CREATE TABLE ppc (
+    ppcId INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    societyId INT NULL, -- Foreign key referencing society table
+    mandal VARCHAR(100) NOT NULL,
+    incharge VARCHAR(100) NOT NULL,
+    phone_number VARCHAR(15),
+    active_status BOOLEAN NOT NULL DEFAULT TRUE,
+    FOREIGN KEY (societyId) REFERENCES society(societyId) ON DELETE SET NULL -- Change to ON DELETE SET NULL if preferred
+);
+
+-- Creating users table
+CREATE TABLE users (
+    userId INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(50) NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    role ENUM('admin', 'admin_view', 'society_view', 'ppc_user') NOT NULL,
+    ppcId INT, -- Link to PPC Table (for PPC users)
+    societyId INT, -- Link to Society Table (for society viewers)
+    FOREIGN KEY (ppcId) REFERENCES ppc(ppcId) ON DELETE SET NULL,
+    FOREIGN KEY (societyId) REFERENCES society(societyId) ON DELETE SET NULL
+);
+
+CREATE TABLE paddy_purchase (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    ppc_id INT NOT NULL,  -- Foreign key to PPC table
+    purchase_date DATE NOT NULL,
+    new_gunnies_received INT NOT NULL,
+    old_gunnies_received INT NOT NULL,
+    grade_a_farmers INT NOT NULL,
+    grade_a_new_bags INT NOT NULL,
+    grade_a_old_bags INT NOT NULL,
+    grade_c_farmers INT NOT NULL,
+    grade_c_new_bags INT NOT NULL,
+    grade_c_old_bags INT NOT NULL,
+    createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (ppc_id) REFERENCES ppc(ppcId)
+);
+
+CREATE TABLE rice_mill (
+    mill_id INT AUTO_INCREMENT PRIMARY KEY,
+    mill_name VARCHAR(100) NOT NULL,
+    incharge_name VARCHAR(100) NOT NULL,
+    phone_number VARCHAR(15) NULL
+);
+
+CREATE TABLE trucksheet_details (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    paddy_purchase_id INT NOT NULL,  -- Foreign key to paddy_purchase table
+    ppc_id INT NOT NULL,  -- Foreign key to PPC table
+    trucksheet_number VARCHAR(50) NOT NULL,
+    mill_id INT,  -- Foreign key to the rice_mill table
+    grade ENUM('A', 'C') NOT NULL,  -- Grade of the paddy
+    farmers_count INT NOT NULL,  -- Number of farmers involved in this trucksheet
+    new_bags_used INT NOT NULL,  -- New bags used for storing paddy
+    old_bags_used INT NOT NULL,  -- Old bags used for storing paddy
+    is_validated BOOLEAN DEFAULT FALSE,  -- Whether the trucksheet has been validated
+    amount_paddy DECIMAL(10,2) NOT NULL,  -- Amount of paddy loaded into the trucksheet
+    validated_amount DECIMAL(10,2) DEFAULT 0,  -- Amount of paddy validated by the rice mill
+    tab_entry_done BOOLEAN DEFAULT FALSE,  -- Whether tab entry is done for this trucksheet
+    createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (paddy_purchase_id) REFERENCES paddy_purchase(id),
+    FOREIGN KEY (ppc_id) REFERENCES ppc(ppcId),
+    FOREIGN KEY (mill_id) REFERENCES rice_mill(mill_id) ON DELETE SET NULL
+);
