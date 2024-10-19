@@ -6,59 +6,59 @@ USE paddy_procurement_db;
 
 -- create society table
 CREATE TABLE society (
-    societyId INT AUTO_INCREMENT PRIMARY KEY,
-    society_name VARCHAR(100) NOT NULL,
+    societyId BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    societyName VARCHAR(100) NOT NULL,
     incharge VARCHAR(100) NOT NULL,
-    phone_number VARCHAR(15),
+    phoneNumber VARCHAR(15),
     email VARCHAR(100)
 );
 
 -- Creating PPC Table
 CREATE TABLE ppc (
-    ppcId INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(100) NOT NULL,
-    societyId INT NULL, -- Foreign key referencing society table
+    ppcId BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    ppcName VARCHAR(100) NOT NULL,
+    societyId BIGINT NULL, -- Foreign key referencing society table
     mandal VARCHAR(100) NOT NULL,
     incharge VARCHAR(100) NOT NULL,
-    phone_number VARCHAR(15),
-    active_status BOOLEAN NOT NULL DEFAULT TRUE,
+    phoneNumber VARCHAR(15),
+    activeStatus BOOLEAN NOT NULL DEFAULT TRUE,
     FOREIGN KEY (societyId) REFERENCES society(societyId) ON DELETE SET NULL -- Change to ON DELETE SET NULL if preferred
 );
 
 -- Creating users table
 CREATE TABLE users (
-    userId INT AUTO_INCREMENT PRIMARY KEY,
+    userId BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     username VARCHAR(50) NOT NULL,
     password VARCHAR(255) NOT NULL,
     role ENUM('admin', 'admin_view', 'society_view', 'ppc_user') NOT NULL,
-    ppcId INT, -- Link to PPC Table (for PPC users)
-    societyId INT, -- Link to Society Table (for society viewers)
+    ppcId BIGINT, -- Link to PPC Table (for PPC users)
+    societyId BIGINT, -- Link to Society Table (for society viewers)
     FOREIGN KEY (ppcId) REFERENCES ppc(ppcId) ON DELETE SET NULL,
     FOREIGN KEY (societyId) REFERENCES society(societyId) ON DELETE SET NULL
 );
 
 CREATE TABLE paddy_purchase (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    ppc_id INT NOT NULL,  -- Foreign key to PPC table
-    purchase_date DATE NOT NULL,
-    new_gunnies_received INT NOT NULL,
-    old_gunnies_received INT NOT NULL,
-    grade_a_farmers INT NOT NULL,
-    grade_a_new_bags INT NOT NULL,
-    grade_a_old_bags INT NOT NULL,
-    grade_c_farmers INT NOT NULL,
-    grade_c_new_bags INT NOT NULL,
-    grade_c_old_bags INT NOT NULL,
+    id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    ppcId BIGINT NULL,  -- Foreign key to PPC table
+    purchaseDate DATE NOT NULL,
+    newGunniesReceived BIGINT NULL,
+    oldGunniesReceived BIGINT NULL,
+    gradeAFarmers BIGINT NULL,
+    gradeANewBags BIGINT NULL,
+    gradeAOldBags BIGINT NULL,
+    gradeCFarmers BIGINT NULL,
+    gradeCNewBags BIGINT NULL,
+    gradeCOldBags BIGINT NULL,
     createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (ppc_id) REFERENCES ppc(ppcId)
+    FOREIGN KEY (ppcId) REFERENCES ppc(ppcId)
 );
 
 CREATE TABLE rice_mill (
-    mill_id INT AUTO_INCREMENT PRIMARY KEY,
-    mill_name VARCHAR(100) NOT NULL,
-    incharge_name VARCHAR(100) NOT NULL,
-    phone_number VARCHAR(15) NULL
+    millId BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    millName VARCHAR(100) NOT NULL,
+    inchargeName VARCHAR(100) NOT NULL,
+    phoneNumber VARCHAR(15) NULL
 );
 
 CREATE TABLE trucksheet_details (
