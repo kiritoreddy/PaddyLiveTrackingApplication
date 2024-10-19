@@ -1,4 +1,4 @@
-package com.example.paddyLiveTracking.serviceImpl;
+package com.example.paddyLiveTracking.service;
 
 import com.example.paddyLiveTracking.model.PPC;
 import com.example.paddyLiveTracking.repository.PPCRepository;

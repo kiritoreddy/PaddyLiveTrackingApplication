@@ -1,7 +1,8 @@
 package com.example.paddyLiveTracking.controller;
 
 import com.example.paddyLiveTracking.model.PPC;
-import com.example.paddyLiveTracking.serviceImpl.PPCService;
+import com.example.paddyLiveTracking.service.PPCService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

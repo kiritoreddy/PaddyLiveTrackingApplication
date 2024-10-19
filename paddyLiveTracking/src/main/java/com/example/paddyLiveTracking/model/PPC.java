@@ -1,6 +1,11 @@
 package com.example.paddyLiveTracking.model;
 
-import javax.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "ppc")
@@ -8,19 +13,42 @@ public class PPC {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ppcId")
     private Long id;
 
-    @Column(name = "ppc_name")
+    @Column(name = "ppcName")
     private String ppcName;
 
-    @Column(name = "location")
-    private String location;
+    @Column(name = "mandal")
+    private String mandal;
 
-    @Column(name = "incharge_name")
+    @Column(name = "incharge")
     private String inchargeName;
 
-    @Column(name = "phone_number")
+    @Column(name = "societyId")
+    private Long societyId;
+
+    @Column(name = "phoneNumber")
     private String phoneNumber;
+
+    @Column(name = "activeStatus")
+    private Boolean activeStatus;
+
+    public String getMandal() {
+        return mandal;
+    }
+
+    public void setMandal(String mandal) {
+        this.mandal = mandal;
+    }
+
+    public Boolean getActiveStatus() {
+        return activeStatus;
+    }
+
+    public void setActiveStatus(Boolean activeStatus) {
+        this.activeStatus = activeStatus;
+    }
 
     // Getters and setters
     public Long getId() {
@@ -39,19 +67,11 @@ public class PPC {
         this.ppcName = ppcName;
     }
 
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
     public String getInchargeName() {
         return inchargeName;
     }
 
-    public void setInchargeName(String inchargeName) {
+    public void setIncharge(String inchargeName) {
         this.inchargeName = inchargeName;
     }
 
