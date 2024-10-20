@@ -79,8 +79,14 @@ public class UserService {
 
     // Validate JWT token
     public boolean validateToken(String token) {
+        try{
         String username = jwtUtil.extractUsername(token);
         return username != null && jwtUtil.validateToken(token, username);
+        }
+        catch(Exception e){
+            System.out.println("Token validation failed: " + e.getMessage());
+            return false;
+        }
     }
 
     public void logout() {
