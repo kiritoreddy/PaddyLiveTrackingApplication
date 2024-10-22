@@ -1,0 +1,55 @@
+.sidebar-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 250px;
+    height: 100vh;
+    background-color: #d8bfd8; /* Light violet background for the whole sidebar */
+    padding: 0;
+    border-right: 1px solid #ddd;
+    z-index: 1000;
+    box-sizing: border-box; /* Ensure padding does not affect the width */
+}
+
+.sidebar-heading {
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-align: center;
+    padding: 20px;
+    margin: 0;
+    background-color: #d8bfd8; /* Light violet background for the heading */
+    color: white;
+    border-bottom: 1px solid #ccc;
+}
+
+.nav-item {
+    padding: 10px;
+}
+
+.nav-link {
+    font-size: 1.1rem;
+    color: white; /* Text color white */
+    display: flex;
+    align-items: center;
+    padding: 10px 15px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    background-color: #d8bfd8; /* Background matches the sidebar violet */
+}
+
+.nav-link i {
+    margin-right: 10px;
+}
+
+.nav-link:hover {
+    background-color: #0000ff; /* Blue background on hover */
+    color: white; /* Keep text white */
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+.nav-link.active {
+    background-color: #0000ff; /* Active link will be blue */
+    color: white;
+    font-weight: bold;
+    border-radius: 5px;
+}
