@@ -1,0 +1,35 @@
+/* Center the loading container */
+.loading-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: rgba(255, 255, 255, 0.8); /* Optional: slight overlay effect */
+    color: #333;
+    font-family: Arial, sans-serif;
+}
+
+/* Spinner style */
+.spinner {
+    width: 40px;
+    height: 40px;
+    border: 5px solid #ccc; /* Light gray color for the border */
+    border-top-color: #007bff; /* Blue for the animated border */
+    border-radius: 50%;
+    animation: spin 1s ease-in-out infinite;
+}
+
+/* Spinner animation */
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Loading message styling */
+.loading-message {
+    margin-top: 15px;
+    font-size: 1.2em;
+    color: #555;
+}

@@ -1,55 +1,23 @@
-// // PrivateRoute component
-// import React from 'react';
-// import { Route, Navigate } from 'react-router-dom';
-// import { AuthService } from './services/AuthService';
-
-// const PrivateRoute = ({ component: Component, ...rest }) => {
-//     const [isAuthenticated, setIsAuthenticated] = React.useState(false);
-
-//     React.useEffect(() => {
-//         const checkAuth = async () => {
-//             const auth = await AuthService.isAuthenticated();
-//             setIsAuthenticated(auth);
-//         };
-//         checkAuth();
-//     }, []);
-
-//     return (
-//         <Route
-//             {...rest}
-//             render={props =>
-//                 isAuthenticated ? (
-//                     <Component {...props} />
-//                 ) : (
-//                     <Navigate to="/login" />
-//                 )
-//             }
-//         />
-//     );
-// };
-
-// export default PrivateRoute;
-import React, { useState, useEffect } from 'react';
+import React, { useContext } from 'react';
 import { Outlet, Navigate } from 'react-router-dom';
-import { AuthService } from './services/AuthService';
+import { AuthContext } from './context/AuthContext';
 
-const PrivateRoute = () => {
-    const [isAuthenticated, setIsAuthenticated] = useState(null); // Initial state is 'null' to indicate loading
-
-    useEffect(() => {
-        const checkAuth = async () => {
-            const auth = await AuthService.isAuthenticated();
-            setIsAuthenticated(auth);
-        };
-        checkAuth();
-    }, []);
+const PrivateRoute = ({ requiredRole }) => {
+    const { isAuthenticated, user } = useContext(AuthContext);
 
     if (isAuthenticated === null) {
-        return <div>Loading...</div>; // Loading indicator while checking authentication
+        return <div>Loading...</div>; // Show loading while checking auth
     }
 
-    return isAuthenticated ? <Outlet /> : <Navigate to="/login" />;
+    if (!isAuthenticated) {
+        return <Navigate to="/login" />; // Redirect to login if not authenticated
+    }
+
+    if (requiredRole && user.role !== requiredRole) {
+        return <Navigate to="/access-denied" />; // Redirect if role doesn't match
+    }
+
+    return <Outlet />; // Render child routes if authenticated and role matches
 };
 
 export default PrivateRoute;
-

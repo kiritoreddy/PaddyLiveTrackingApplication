@@ -41,9 +41,10 @@ public class UserController {
 
     // Update user details
     // @PutMapping("/{userId}")
-    // public ResponseEntity<User> updateUser(@PathVariable Long userId, @Valid @RequestBody User user) {
-    //     User updatedUser = userService.updateUser(userId, user);
-    //     return new ResponseEntity<>(updatedUser, HttpStatus.OK);
+    // public ResponseEntity<User> updateUser(@PathVariable Long userId, @Valid
+    // @RequestBody User user) {
+    // User updatedUser = userService.updateUser(userId, user);
+    // return new ResponseEntity<>(updatedUser, HttpStatus.OK);
     // }
 
     // Delete a user
@@ -56,7 +57,7 @@ public class UserController {
     // User login
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody Map<String, String> requestBody) {
-        String token = userService.login(requestBody.get("userName"),requestBody.get("password"));
+        String token = userService.login(requestBody.get("userName"), requestBody.get("password"));
         if (token != null) {
             return ResponseEntity.ok(token); // Return the token if login is successful
         } else {
@@ -72,9 +73,18 @@ public class UserController {
     }
 
     // Validate token
-    @GetMapping("/validate")
-    public ResponseEntity<Boolean> validateToken(@RequestHeader("Authorization") String token) {
-        boolean isValid = userService.validateToken(token);
-        return new ResponseEntity<>(isValid, HttpStatus.OK);
+@GetMapping("/validate")
+public ResponseEntity<Boolean> validateToken(@RequestHeader("Authorization") String token) {
+    String extractedToken = ""; // Initialize outside if block
+    if (token != null && token.startsWith("Bearer ")) {
+        // Remove "Bearer " prefix
+        extractedToken = token.substring(7);
+    } else {
+        // Handle missing or improperly formatted token
+        return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
     }
+    boolean isValid = userService.validateToken(extractedToken);
+    return new ResponseEntity<>(isValid, HttpStatus.OK);
+}
+
 }

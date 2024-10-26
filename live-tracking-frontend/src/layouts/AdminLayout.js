@@ -1,18 +1,18 @@
 import React from 'react';
-import Navbar from '../components/Navbar';
 import Sidebar from '../components/Sidebar';
+import { Outlet } from 'react-router-dom';
 
-const AdminLayout = ({ children }) => {
+const AdminLayout = () => {
     return (
         <div className="d-flex">
-            <Navbar />
+            
             <div className="container-fluid">
                 <div className="row">
                     <div className="col-md-3">
                         <Sidebar />
                     </div>
                     <div className="col-md-9">
-                        {children}
+                    <Outlet />
                     </div>
                 </div>
             </div>

@@ -80,6 +80,7 @@ public class UserService {
     // Validate JWT token
     public boolean validateToken(String token) {
         try{
+            
         String username = jwtUtil.extractUsername(token);
         return username != null && jwtUtil.validateToken(token, username);
         }

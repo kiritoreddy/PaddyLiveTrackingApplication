@@ -1,41 +1,31 @@
-import React, { createContext, useState, useEffect } from 'react';
+import { useState, useEffect, createContext } from 'react';
 import { AuthService } from '../services/AuthService';
 
-export const AuthContext = createContext();
+export const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const [loading, setLoading] = useState(true);
+    const authenticateUser = async () => {
+        const authStatus = await AuthService.isAuthenticated();
+        if (authStatus) {
+            const { role, ppcId, societyId } = await AuthService.getUserInfo();
+            setUser({ role, ppcId, societyId });
+            setIsAuthenticated(true);
+        } else {
+            setUser(null);
+            setIsAuthenticated(false);
+        }
+        setLoading(false);
+    };
 
     useEffect(() => {
-        const authenticateUser = async () => {
-           // const isAuthenticated = await AuthService.isAuthenticated();
-            if (true) {
-
-                // Get user details (role, ppcId, etc.) from initial login
-                const { role, ppcId, societyId } = await AuthService.login();
-                setUser({ role, ppcId, societyId });
-                console.log("user is ",user)
-            }
-        };
-        // const authenticateUser = async () => {
-        // const isAuthenticated = AuthService._isAuthenticated; // Check if authenticated
-        // if (isAuthenticated) {
-        //     // Fetch the user data stored after successful login
-        //     const storedUser = AuthService.hardcodedUsers.find(
-        //         (u) => u.username === user?.username // Fetch the current user's details from hardcoded users
-        //     );
-        //     if (storedUser) {
-        //         setUser(storedUser); // Update the user state with the user details
-               
-        //     }
-            
-        // }
-
         authenticateUser();
     }, []);
 
     return (
-        <AuthContext.Provider value={{ user, setUser }}>
+        <AuthContext.Provider value={{ user, isAuthenticated, setUser, authenticateUser,loading }}>
             {children}
         </AuthContext.Provider>
     );

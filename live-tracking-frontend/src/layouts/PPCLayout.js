@@ -1,12 +1,12 @@
 import React from 'react';
-import Navbar from '../components/Navbar';
+import { Outlet } from 'react-router-dom';
 
-const PPCLayout = ({ children }) => {
+const PPCLayout = () => {
     return (
         <div>
-            <Navbar />
+            
             <div className="container-fluid">
-                {children}
+            <Outlet />
             </div>
         </div>
     );

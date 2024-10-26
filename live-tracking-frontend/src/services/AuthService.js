@@ -113,6 +113,21 @@ import {jwtDecode} from 'jwt-decode'; // Corrected the import, removed curly bra
 axios.defaults.baseURL = 'http://localhost:8080';
 
 export const AuthService = {
+
+    getToken : () => {
+        // Retrieve JWT token from HttpOnly cookie
+        return Cookies.get('authToken') || null; // Replace 'authToken' with your actual cookie name if different
+    },
+
+    getUserInfo : () => {
+        const token = AuthService.getToken();
+        if (token) {
+            const { role, ppcId, societyId } = jwtDecode(token);
+            return { role, ppcId, societyId };
+        }
+        return null;
+    },
+
     // Login function
     login: async (credentials) => {
         try {
@@ -146,10 +161,11 @@ export const AuthService = {
     // Authentication check function
     isAuthenticated: async () => {
         try {
-            const token = Cookies.get('authToken'); // Retrieve token from cookies
+            const token = Cookies.get('authToken')?.trim();
+            ; // Retrieve token from cookies
 
             if (!token) {
-                throw new Error('No token found');
+                return false;
             }
 
             // Send token in the Authorization header
