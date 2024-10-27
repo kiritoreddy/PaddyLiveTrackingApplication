@@ -9,7 +9,7 @@ version = '0.0.1-SNAPSHOT'
 
 java {
     toolchain {
-        languageVersion = JavaLanguageVersion.of(17)
+        languageVersion = JavaLanguageVersion.of(22)
     }
 }
 
@@ -31,6 +31,8 @@ dependencies {
     implementation 'com.mysql:mysql-connector-j:9.1.0'
     // Servlet API (if needed)
     implementation 'javax.servlet:javax.servlet-api:4.0.1'
+
+    implementation 'org.apache.poi:poi-ooxml:5.2.3'
 
     // Spring Security Starter
     implementation 'org.springframework.boot:spring-boot-starter-security'
