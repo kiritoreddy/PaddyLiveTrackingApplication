@@ -62,7 +62,7 @@ public class SecurityConfig { // Remove "extends WebSecurityConfigurerAdapter"
     public CorsFilter corsFilter() {
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true); // Allow credentials (cookies, etc.)
-        config.addAllowedOrigin("http://localhost:3000"); // Allow your frontend's domain
+        config.addAllowedOrigin("http://localhost:3001"); // Allow your frontend's domain
         config.addAllowedHeader("*"); // Allow all headers
         config.addAllowedMethod("*"); // Allow all HTTP methods
 

@@ -1,55 +1,98 @@
+/* Sidebar container */
 .sidebar-container {
     position: fixed;
     top: 0;
     left: 0;
-    width: 250px;
+    width: 58px; /* Default width to show only icons */
     height: 100vh;
-    background-color: #d8bfd8; /* Light violet background for the whole sidebar */
+    background-color: #f0f0f0; /* Grayish background for the entire sidebar */
     padding: 0;
     border-right: 1px solid #ddd;
     z-index: 1000;
-    box-sizing: border-box; /* Ensure padding does not affect the width */
+    box-sizing: border-box;
+    overflow: hidden;
+    transition: width 0.3s ease; /* Smooth width transition */
 }
 
+/* Expand sidebar on hover */
+.sidebar-container:hover {
+    width: 220px; /* Expands width to show both text and icons */
+}
+
+/* Sidebar Heading Styling */
 .sidebar-heading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     font-size: 1.5rem;
     font-weight: bold;
-    text-align: center;
     padding: 20px;
-    margin: 0;
-    background-color: #d8bfd8; /* Light violet background for the heading */
-    color: white;
+    background-color: #6a0dad; /* Keep heading background violet */
+    color: white; /* Heading text color is white */
     border-bottom: 1px solid #ccc;
+    opacity: 0; /* Hide heading by default */
+    transition: opacity 0.3s ease; /* Smooth opacity transition */
 }
 
+/* Show heading on hover */
+.sidebar-container:hover .sidebar-heading {
+    opacity: 1; /* Show heading when sidebar is expanded */
+}
+
+/* Paddy Icon Styling */
+.paddy-icon {
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+    border-radius: 5px; /* Optional: add border radius */
+}
+
+/* Nav item padding */
 .nav-item {
     padding: 10px;
 }
 
+/* Default style for nav-link */
 .nav-link {
     font-size: 1.1rem;
-    color: white; /* Text color white */
+    color: #6a0dad; /* Default text color is violet */
     display: flex;
     align-items: center;
     padding: 10px 15px;
     transition: background-color 0.3s ease, color 0.3s ease;
-    background-color: #d8bfd8; /* Background matches the sidebar violet */
+    background-color: transparent; /* No background color initially */
+    white-space: nowrap; /* Prevent text wrapping */
 }
 
-.nav-link i {
+/* Sidebar icon styling */
+.sidebar-icon {
+    color: #6a0dad; /* Default icon color is violet */
     margin-right: 10px;
+    font-size: 1.3rem;
+    transition: color 0.3s ease; /* Smooth color transition */
 }
 
+/* On hover: change background color and text color */
 .nav-link:hover {
-    background-color: #0000ff; /* Blue background on hover */
-    color: white; /* Keep text white */
-    border-radius: 5px;
-    text-decoration: none;
+    background-color: #e0e0e0; /* Light gray background on hover */
+    color: black; /* Change text color to black on hover */
+    border-radius: 5px; /* Rounded corners */
 }
 
+/* On hover: icon color turns to violet */
+.nav-link:hover .sidebar-icon {
+    color: #6a0dad; /* Change icon color to violet on hover */
+}
+
+/* Active link styling */
 .nav-link.active {
-    background-color: #0000ff; /* Active link will be blue */
-    color: white;
-    font-weight: bold;
-    border-radius: 5px;
+    background-color: #e0e0e0; /* Light gray background for active link */
+    color: black; /* Active link text color is black */
+    font-weight: bold; /* Bold text for active link */
+    border-radius: 5px; /* Rounded corners */
+}
+
+/* Active icon color */
+.nav-link.active .sidebar-icon {
+    color: #6a0dad; /* Keep active icon color violet */
 }
