@@ -1,0 +1,15 @@
+.card {
+    margin-bottom: 20px; /* Adjust as needed */
+}
+
+.card .feather {
+    color: #4a4a4a; /* Set the icon color */
+}
+
+.card h6 {
+    font-weight: 600; /* Adjust title weight */
+}
+
+.card h3 {
+    margin: 0; /* Remove default margin */
+}
