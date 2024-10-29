@@ -1,0 +1,54 @@
+.donut-chart-card {
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+    background-color: #f9f9f9;
+    transition: box-shadow 0.3s ease;
+}
+
+.donut-chart-card:hover {
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.custom-tooltip {
+    position: absolute;
+    top: -130px; /* Adjust position as needed */
+    right: 10px;
+    background-color: #ffffff;
+    padding: 12px 16px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    font-size: 14px;
+    z-index: 100;
+    width: 180px;
+}
+
+.custom-tooltip table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.custom-tooltip th {
+    font-weight: bold;
+    color: #666;
+    text-align: center;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #ddd;
+}
+
+.custom-tooltip td {
+    text-align: center;
+    padding: 6px 0;
+    color: #444;
+}
+
+.custom-tooltip tr:nth-child(odd) td {
+    background-color: #f5f5f5;
+}
+
+.custom-tooltip tbody tr:hover {
+    background-color: #e9ecef;
+}

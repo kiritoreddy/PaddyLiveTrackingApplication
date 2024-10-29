@@ -1,12 +1,13 @@
 // src/components/DonutPie.js
-import React, { useEffect, useRef } from 'react';
-import { Chart, registerables } from 'chart.js'; // Import registerables
+import React, { useEffect, useRef, useState } from 'react';
+import { Chart, registerables } from 'chart.js';
+import './DonutPie.css';
 
-// Register all necessary components
 Chart.register(...registerables);
 
 const DonutChart = ({ data }) => {
     const canvasRef = useRef(null);
+    const [showTooltip, setShowTooltip] = useState(false);
 
     useEffect(() => {
         const ctx = canvasRef.current.getContext('2d');
@@ -17,8 +18,8 @@ const DonutChart = ({ data }) => {
                 datasets: [
                     {
                         data: data.values,
-                        backgroundColor: ['#FF6384', '#36A2EB'], // Colors for each part
-                        hoverBackgroundColor: ['#FF6384', '#36A2EB'], // Colors on hover
+                        backgroundColor: ['#FF6384', '#36A2EB'],
+                        hoverBackgroundColor: ['#FF6384', '#36A2EB'],
                     },
                 ],
             },
@@ -27,14 +28,14 @@ const DonutChart = ({ data }) => {
                 maintainAspectRatio: false,
                 plugins: {
                     legend: {
-                        display: false, // Hide default legend
+                        display: false,
                     },
                     tooltip: {
                         callbacks: {
                             label: (tooltipItem) => {
                                 const value = tooltipItem.raw;
                                 const total = data.values.reduce((a, b) => a + b, 0);
-                                const percentage = ((value / total) * 100).toFixed(2) + '%'; // Show only percentage on hover
+                                const percentage = ((value / total) * 100).toFixed(2) + '%';
                                 return percentage;
                             },
                         },
@@ -44,27 +45,35 @@ const DonutChart = ({ data }) => {
         });
 
         return () => {
-            chart.destroy(); // Clean up on unmount
+            chart.destroy();
         };
     }, [data]);
 
-    const total = data.values.reduce((a, b) => a + b, 0); // Calculate total value
+    const total = data.values.reduce((a, b) => a + b, 0);
 
     return (
-        <div style={{ display: 'flex', alignItems: 'center' }}>
-            <div style={{ width: '200px', height: '200px', backgroundColor: 'white' }}> {/* Make the donut chart bigger */}
-                <canvas ref={canvasRef} />
+        <div
+            className="donut-chart-card"
+            onMouseEnter={() => setShowTooltip(true)}
+            onMouseLeave={() => setShowTooltip(false)}
+        >
+            {/* Donut Chart */}
+            <div style={{ width: '60%', display: 'flex', justifyContent: 'center', backgroundColor: 'white' }}>
+                <canvas ref={canvasRef} style={{ width: '100%', maxWidth: '150px', height: '150px' }} />
             </div>
-            <div style={{ marginLeft: '20px', fontSize: '14px', lineHeight: '1.5' }}>
+            {/* Legend and Values */}
+            <div style={{ width: '40%', padding: '10px', fontSize: '14px', lineHeight: '1.5' }}>
                 {data.labels.map((label, index) => (
                     <div key={index} style={{ display: 'flex', alignItems: 'center', marginBottom: '5px' }}>
-                        <div style={{
-                            width: '10px',
-                            height: '10px',
-                            backgroundColor: ['#FF6384', '#36A2EB'][index],
-                            borderRadius: '50%',
-                            marginRight: '5px'
-                        }} />
+                        <div
+                            style={{
+                                width: '10px',
+                                height: '10px',
+                                backgroundColor: ['#FF6384', '#36A2EB'][index],
+                                borderRadius: '50%',
+                                marginRight: '5px',
+                            }}
+                        />
                         <span>{`${label}: ${data.values[index]}`}</span>
                     </div>
                 ))}
@@ -72,6 +81,37 @@ const DonutChart = ({ data }) => {
                     <span>Total: {total}</span>
                 </div>
             </div>
+            {/* Tooltip */}
+            {showTooltip && (
+                <div className="custom-tooltip">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>Type A</th>
+                                <th>Type C</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Purchased</td>
+                                <td>100</td>
+                                <td>50</td>
+                            </tr>
+                            <tr>
+                                <td>Shifted</td>
+                                <td>75</td>
+                                <td>30</td>
+                            </tr>
+                            <tr>
+                                <td>To be Shifted</td>
+                                <td>25</td>
+                                <td>20</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            )}
         </div>
     );
 };
