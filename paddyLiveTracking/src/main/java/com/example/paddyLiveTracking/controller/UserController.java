@@ -1,8 +1,12 @@
 package com.example.paddyLiveTracking.controller;
 
 import com.example.paddyLiveTracking.model.User;
+import com.example.paddyLiveTracking.service.ExcelTemplateService;
+import com.example.paddyLiveTracking.service.SocietyService;
 import com.example.paddyLiveTracking.service.UserService;
+import java.io.IOException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,8 +19,18 @@ import java.util.List;
 @RequestMapping("/api/users")
 public class UserController {
 
+   
+
+    private final UserService userService;
+    private final SocietyService societyService;
+    private final ExcelTemplateService excelTemplateService;
+
     @Autowired
-    private UserService userService;
+    public UserController(SocietyService societyService, ExcelTemplateService excelTemplateService,UserService userService) {
+        this.societyService = societyService;
+        this.userService = userService;
+        this.excelTemplateService = excelTemplateService;
+    }
 
     // Create a new user
     @PostMapping("/register")
@@ -25,8 +39,34 @@ public class UserController {
         return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
     }
 
+    
+
+    @GetMapping("/download-template")
+    public ResponseEntity<ByteArrayResource> downloadUserTemplate() {
+        try {
+            Map<String, Long> societyNameToIdMap = societyService.getSocietyNameToIdMap(); // Fetch society names with IDs
+            return excelTemplateService.generateUserTemplate(societyNameToIdMap);
+        } catch (IOException e) {
+            // Log the exception (optional, you may want to use a logging framework)
+            // log.error("Error while generating user template: ", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new ByteArrayResource("An error occurred while generating the template.".getBytes()));
+        }
+    }
+
+    @PostMapping("/bulkRegister")
+    public ResponseEntity<String> uploadUsers(@RequestBody List<User> users) {
+        try {
+            userService.createMultipleUsers(users);
+            return ResponseEntity.ok("Users registered successfully.");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Failed to register users: " + e.getMessage());
+        }
+    }
+
     // Get all users
-    @GetMapping
+    @GetMapping("/all")
     public ResponseEntity<List<User>> getAllUsers() {
         List<User> users = userService.getAllUsers();
         return new ResponseEntity<>(users, HttpStatus.OK);
@@ -73,18 +113,18 @@ public class UserController {
     }
 
     // Validate token
-@GetMapping("/validate")
-public ResponseEntity<Boolean> validateToken(@RequestHeader("Authorization") String token) {
-    String extractedToken = ""; // Initialize outside if block
-    if (token != null && token.startsWith("Bearer ")) {
-        // Remove "Bearer " prefix
-        extractedToken = token.substring(7);
-    } else {
-        // Handle missing or improperly formatted token
-        return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
+    @GetMapping("/validate")
+    public ResponseEntity<Boolean> validateToken(@RequestHeader("Authorization") String token) {
+        String extractedToken = ""; // Initialize outside if block
+        if (token != null && token.startsWith("Bearer ")) {
+            // Remove "Bearer " prefix
+            extractedToken = token.substring(7);
+        } else {
+            // Handle missing or improperly formatted token
+            return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
+        }
+        boolean isValid = userService.validateToken(extractedToken);
+        return new ResponseEntity<>(isValid, HttpStatus.OK);
     }
-    boolean isValid = userService.validateToken(extractedToken);
-    return new ResponseEntity<>(isValid, HttpStatus.OK);
-}
 
 }

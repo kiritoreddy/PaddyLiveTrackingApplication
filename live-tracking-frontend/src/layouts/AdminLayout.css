@@ -1,0 +1,14 @@
+.admin-layout {
+    display: flex;
+    height: 100vh; /* Full height of the viewport */
+    transition: margin-left 0.3s; /* Smooth transition for margin */
+}
+
+.main-content {
+    flex: 1; /* Take the remaining space */
+    transition: margin-left 0.3s; /* Smooth transition for margin */
+}
+
+.main-content.collapsed {
+    margin-left: 60px; /* Adjust this based on sidebar width when collapsed */
+}

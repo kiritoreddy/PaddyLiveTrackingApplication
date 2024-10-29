@@ -8,6 +8,7 @@ import com.example.paddyLiveTracking.utils.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -28,6 +29,12 @@ public class UserService {
     public User createUser(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
+    }
+
+    @Transactional
+    public List<User> createMultipleUsers(List<User> users) {
+        users.forEach(user -> user.setPassword(passwordEncoder.encode(user.getPassword())));
+        return userRepository.saveAll(users);
     }
 
     // Get all users
@@ -80,7 +87,7 @@ public class UserService {
     // Validate JWT token
     public boolean validateToken(String token) {
         try{
-            
+
         String username = jwtUtil.extractUsername(token);
         return username != null && jwtUtil.validateToken(token, username);
         }

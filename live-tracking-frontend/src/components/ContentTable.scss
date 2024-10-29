@@ -1,0 +1,19 @@
+.ContentTable{
+    .table-hover tbody tr:hover {
+        background-color: rgba(4, 169, 245, 0.05);
+      }
+      .table {
+        margin-bottom: 0rem;
+    }
+    .center-header {
+      .ag-header-cell-comp-wrapper {
+        justify-content: center;
+      }
+      .ag-header-cell-label{
+        justify-content: center;
+      }
+    }
+    .ag-header-group-cell-label, .ag-header-cell-label {
+      justify-content: center;
+    }
+}

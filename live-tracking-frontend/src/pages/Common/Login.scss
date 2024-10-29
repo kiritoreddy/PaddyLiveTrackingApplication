@@ -1,12 +1,13 @@
-/* Login.css */
+.login{
+
+
 .container {
     max-width: 400px; /* Limit the width of the form */
-    margin: auto; /* Center the form horizontally */
-    padding: 20px; /* Add padding around the form */
+    padding: 20px; /* Padding around the form */
     border: 1px solid #ccc; /* Add a border */
     border-radius: 8px; /* Rounded corners */
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
-    background-color: #f9f9f9; /* Light background color */
+    background-color: #eaeaea; /* Light greyish background for the card */
     transition: width 0.3s; /* Smooth width transition */
 }
 
@@ -80,4 +81,5 @@ button:hover:not(:disabled) {
     input {
         padding: 12px; /* Increase padding for inputs */
     }
+}
 }

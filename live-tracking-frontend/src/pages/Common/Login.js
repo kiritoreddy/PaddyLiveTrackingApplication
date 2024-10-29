@@ -2,13 +2,13 @@ import React, { useState, useContext, useEffect } from 'react';
 import { AuthService } from '../../services/AuthService';
 import { AuthContext } from '../../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
-import './Login.css';
+import './Login.scss';
 import Loading from '../../components/Loading';
 
 const Login = () => {
     const [userName, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const { user, setUser, isAuthenticated, loading,authenticateUser } = useContext(AuthContext);
+    const { user, isAuthenticated, loading,authenticateUser } = useContext(AuthContext);
     const navigate = useNavigate();
 
     // Redirect to dashboard if user is authenticated
@@ -28,7 +28,6 @@ const Login = () => {
 
         if (userData) {
             authenticateUser();
-            debugger;
             if (userData.role === "admin") {
                 navigate("/admin/dashboard");
             } else if (userData.role === "user") {
@@ -45,7 +44,7 @@ const Login = () => {
                 <Loading/>
             ) : (
                 !isAuthenticated && (
-                    <div className="container">
+                    <div className="login container">
                         <h2>Login</h2>
                         <form onSubmit={handleSubmit}>
                             <div className="form-group">
