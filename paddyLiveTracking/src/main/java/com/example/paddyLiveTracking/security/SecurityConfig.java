@@ -58,8 +58,8 @@ public class SecurityConfig { // Remove "extends WebSecurityConfigurerAdapter"
     }
 
     // CORS Configuration
-    @Bean
-    public CorsFilter corsFilter() {
+    @Bean 
+    public CorsFilter corsFilter() {// rr
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true); // Allow credentials (cookies, etc.)
         config.addAllowedOrigin("http://localhost:3001"); // Allow your frontend's domain
