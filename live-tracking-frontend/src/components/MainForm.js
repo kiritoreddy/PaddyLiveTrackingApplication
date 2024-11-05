@@ -1,9 +1,8 @@
 import React, { useState } from "react";
-import "./MainForm.css";
-import DynamicForm from "./DynamicForm"; 
+import "./CommonStyle.css";
+import DynamicForm from "./DynamicForm";
 
 const MainForm = () => {
-
   const [oldBags, setOldBags] = useState(0);
   const [newBags, setNewBags] = useState(0);
   const [gradeA, setGradeA] = useState(0);
@@ -13,138 +12,64 @@ const MainForm = () => {
   const [oldGradeCBags, setOldGradeCBags] = useState(0);
   const [newGradeCBags, setNewGradeCBags] = useState(0);
 
-
-  const totalBags = parseInt(oldBags) + parseInt(newBags);
-  const totalFarmer = parseInt(gradeA) + parseInt(gradeC);
-  const totalGradeABags = parseInt(oldGradeABags) + parseInt(newGradeABags);
-  const totalGradeCBags = parseInt(oldGradeCBags) + parseInt(newGradeCBags);
-
+  const totalBags = parseInt(oldBags || 0) + parseInt(newBags || 0);
+  const totalFarmer = parseInt(gradeA || 0) + parseInt(gradeC || 0);
+  const totalGradeABags = parseInt(oldGradeABags || 0) + parseInt(newGradeABags || 0);
+  const totalGradeCBags = parseInt(oldGradeCBags || 0) + parseInt(newGradeCBags || 0);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Bags and Farmer Info:", {
-      oldBags,
-      newBags,
-      gradeA,
-      gradeC,
-      oldGradeABags,
-      newGradeABags,
-      oldGradeCBags,
-      newGradeCBags,
+    console.log("Form Data:", {
+      totalBags,
+      totalFarmer,
+      totalGradeABags,
+      totalGradeCBags,
     });
   };
 
   return (
-    <div className="container">
-      <h1>Bags Calculation</h1>
-
-      <div className="section-bar">
-        <div className="bag-input">
-          <label>Old Bags:</label>
-          <input
-            type="number"
-            value={oldBags}
-            onChange={(e) => setOldBags(parseInt(e.target.value))}
-          />
+    <div className="main-container">
+      <div className="form-container">
+        <h4>Bags Calculation</h4>
+        <div className="bag-calculation">
+          <div className="grid-container">
+            <div className="form-group">
+              <label>Old Bags:</label>
+              <input type="number" className="small-input" value={oldBags} onChange={(e) => setOldBags(e.target.value)} />
+            </div>
+            <div className="form-group">
+              <label>New Bags:</label>
+              <input type="number" className="small-input" value={newBags} onChange={(e) => setNewBags(e.target.value)} />
+            </div>
+            <div className="form-group">
+              <label>Grade A:</label>
+              <input type="number" className="small-input" value={gradeA} onChange={(e) => setGradeA(e.target.value)} />
+            </div>
+            <div className="form-group">
+              <label>Grade C:</label>
+              <input type="number" className="small-input" value={gradeC} onChange={(e) => setGradeC(e.target.value)} />
+            </div>
+          </div>
+          <div className="totals">
+            <p>Total Bags: {totalBags}</p>
+            <p>Total Farmer: {totalFarmer}</p>
+            <p>Total Grade A Bags: {totalGradeABags}</p>
+            <p>Total Grade C Bags: {totalGradeCBags}</p>
+          </div>
         </div>
-        <span className="operator">+</span>
-        <div className="bag-input">
-          <label>New Bags:</label>
-          <input
-            type="number"
-            value={newBags}
-            onChange={(e) => setNewBags(e.target.value)}
-          />
-        </div>
-        <span className="operator">=</span>
-        <div className="bag-input">
-          <label>Total Bags:</label>
-          <input type="text" value={totalBags} readOnly />
-        </div>
-      </div>
-
-      <div className="section-bar">
-        <div className="bag-input">
-          <label>Grade A:</label>
-          <input
-            type="number"
-            value={gradeA}
-            onChange={(e) => setGradeA(e.target.value)}
-          />
-        </div>
-        <span className="operator">+</span>
-        <div className="bag-input">
-          <label>Grade C:</label>
-          <input
-            type="number"
-            value={gradeC}
-            onChange={(e) => setGradeC(e.target.value)}
-          />
-        </div>
-        <span className="operator">=</span>
-        <div className="bag-input">
-          <label>Total Farmer:</label>
-          <input type="text" value={totalFarmer} readOnly />
-        </div>
-      </div>
-
-      <div className="section-bar">
-        <div className="bag-input">
-          <label>Old Grade A Bags:</label>
-          <input
-            type="number"
-            value={oldGradeABags}
-            onChange={(e) => setOldGradeABags(e.target.value)}
-          />
-        </div>
-        <span className="operator">+</span>
-        <div className="bag-input">
-          <label>New Grade A Bags:</label>
-          <input
-            type="number"
-            value={newGradeABags}
-            onChange={(e) => setNewGradeABags(e.target.value)}
-          />
-        </div>
-        <span className="operator">=</span>
-        <div className="bag-input">
-          <label>Total Grade A Bags:</label>
-          <input type="text" value={totalGradeABags} readOnly />
-        </div>
-      </div>
-
-      <div className="section-bar">
-        <div className="bag-input">
-          <label>Old Grade C Bags:</label>
-          <input
-            type="number"
-            value={oldGradeCBags}
-            onChange={(e) => setOldGradeCBags(e.target.value)}
-          />
-        </div>
-        <span className="operator">+</span>
-        <div className="bag-input">
-          <label>New Grade C Bags:</label>
-          <input
-            type="number"
-            value={newGradeCBags}
-            onChange={(e) => setNewGradeCBags(e.target.value)}
-          />
-        </div>
-        <span className="operator">=</span>
-        <div className="bag-input">
-          <label>Total Grade C Bags:</label>
-          <input type="text" value={totalGradeCBags} readOnly />
-        </div>
-      </div>
-
-     
-      <DynamicForm />
-
-      <div className="form-footer">
-        <button type="submit" onClick={handleSubmit}>
+        <hr />
+        <DynamicForm />
+        <button className="submit-btn" onClick={handleSubmit}>
           Submit
         </button>
+      </div>
+
+      <div className="summary-container">
+        <h4>Summary</h4>
+        <p>Total Bags: {totalBags}</p>
+        <p>Total Farmer: {totalFarmer}</p>
+        <p>Total Grade A Bags: {totalGradeABags}</p>
+        <p>Total Grade C Bags: {totalGradeCBags}</p>
       </div>
     </div>
   );

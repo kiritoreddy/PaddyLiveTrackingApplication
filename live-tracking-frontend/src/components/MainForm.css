@@ -1,85 +1,97 @@
 /* Base container styling for the App component */
 .container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 15px;
-    background-color: #f2f4f6;
-    border-radius: 8px;
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
-  }
-  
-  /* Section headers */
-  h1 {
-    text-align: center;
-    color: #2c3e50;
-    font-family: Arial, sans-serif;
-    margin-bottom: 15px;
-  }
-  
-  /* Each section bar containing input fields */
-  .section-bar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 10px;
-    padding: 10px;
-    background-color: #d6dde2;
-    border: 1px solid #ccd1d5;
-    border-radius: 6px;
-  }
-  
-  /* Label styling */
-  label {
-    font-size: 14px;
-    font-weight: 500;
-    color: #4a4a4a;
-  }
-  
-  /* Input field styling */
-  input[type="number"],
-  input[type="text"] {
-    width: 100px;
-    padding: 6px;
-    margin-left: 5px;
-    margin-right: 10px;
-    border-radius: 4px;
-    border: 1px solid #b0bec5;
-    font-size: 14px;
-    background-color: #ffffff;
-  }
-  
-  input:focus {
-    outline: none;
-    border-color: #0056b3;
-    box-shadow: 0 0 3px rgba(0, 123, 255, 0.2);
-  }
-  
-  /* Operator styling (+, =) */
-  .operator {
-    font-size: 16px;
-    font-weight: bold;
-    margin-left: 5px;
-    margin-right: 5px;
-  }
-  
-  /* Footer buttons */
-  .form-footer {
-    text-align: center;
-    margin-top: 15px;
-  }
-  
-  button {
-    padding: 8px 16px;
-    border: none;
-    border-radius: 4px;
-    font-size: 14px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    background-color: #0056b3;
-    color: white;
-  }
-  
-  button:hover {
-    background-color: #004494;
-  }
-  
+  width: 50vw; /* Set container to 50% of the viewport width */
+  margin: 0 auto;
+  margin-left: 250px;
+  padding: 15px;
+  background-color: #d3d9e3;
+  border-radius: 8px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Section headers */
+h1 {
+  text-align: center;
+  color: #2c3e50;
+  font-family: Arial, sans-serif;
+  margin-bottom: 15px;
+}
+
+/* Each section bar containing input fields */
+.section-bar {
+  width: 50%; /* Set section-bar to 50% of the container width */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 auto 10px; /* Center horizontally */
+  padding: 8px;
+  background-color: #4a5467;
+  border: 1px solid #d5f3e2;
+  border-radius: 6px;
+  box-sizing: border-box;
+  transition: transform 0.2s ease, border-color 0.2s ease; /* Transition for pop-out effect */
+}
+
+/* Pop-out hover effect for .section-bar */
+.section-bar:hover {
+  transform: scale(1.02); /* Slightly scale up on hover */
+  border-color: #0056b3; /* Change border color on hover */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Slight shadow for pop-out effect */
+}
+
+/* Label styling */
+label {
+  font-size: 14px;
+  font-weight: 500;
+  color: #4a4a4a;
+}
+
+/* Input field styling */
+input[type="number"],
+input[type="text"] {
+  width: 60px; /* Smaller width for input fields */
+  padding: 6px;
+  margin-left: 5px;
+  margin-right: 8px;
+  border-radius: 4px;
+  border: 1px solid #b0bec5;
+  font-size: 14px;
+  background-color: #8adf9f;
+  transition: transform 0.2s ease, border-color 0.2s ease; /* Transition for pop-out effect */
+}
+
+/* Hover effect for input fields */
+input[type="number"]:hover,
+input[type="text"]:hover {
+  border-color: #0056b3; /* Change border color on hover */
+  transform: scale(1.05); /* Slightly scale up on hover */
+}
+
+/* Operator styling (+, =) */
+.operator {
+  font-size: 15px;
+  font-weight: bold;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+/* Footer buttons */
+.form-footer {
+  text-align: center;
+  margin-top: 15px;
+}
+
+button {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  background-color: #0056b3;
+  color: white;
+}
+
+button:hover {
+  background-color: #004494;
+}
